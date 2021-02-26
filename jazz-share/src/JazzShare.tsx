@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import * as Core from './core';
 import songs from './content/songs';
-import { ISongInfo } from './core/models';
+import { IChartLine, IChartMeasure, IMeasureChords, ISongInfo } from './core/models';
 
 import './styles/main.scss';
+import { start } from 'repl';
 
 const SelectSong: React.FC<{ songs: Core.Models.ISongInfo[], handleSelect: any }> = props => {
     return <select onChange={(e) => props.handleSelect(e.target.value)}>
@@ -13,10 +14,28 @@ const SelectSong: React.FC<{ songs: Core.Models.ISongInfo[], handleSelect: any }
     </select>
 };
 
+const Measure: React.FC<IChartMeasure> = measure => {
+    const startBorder = measure.isStart ? '' : '';
+
+    return <div className={`chart-line-measure ${measure.isStart ? 'is-start' : ''}`}>
+        {startBorder}
+        {measure.chords.map((chord: IMeasureChords) => {
+            return chord.note;
+        })}
+    </div>
+}
+
+const Line: React.FC<IChartLine> = line => {
+    return <div className={`chart-line`}>
+        { line.measures.map((measure: IChartMeasure) => <Measure {...measure}/>) }
+    </div>
+}
+
 const SongDetails: React.FC<ISongInfo> = song => {
     return <div className="song-details">
         <div>{song.title}</div>
         <div>{song.author}</div>
+        <div>{song.chart?.lines.map((line: IChartLine) => <Line {...line}/>)}</div>
     </div>
 }
 

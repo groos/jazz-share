@@ -1,8 +1,25 @@
 .outer-container {
+    position: relative;
     margin: 3%;
 }
 
 .song-details {
     margin-top: 2vh;
+}
 
+.chart-line {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.chart-line-measure {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    border: 2px solid blue;
+
+    .is-start {
+        
+    }
 }

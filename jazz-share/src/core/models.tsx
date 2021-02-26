@@ -6,6 +6,7 @@ export interface ISongInfo {
     author?: string;
     source?: string;
     backingTrackUrl?: string;
+    chart?: IChart;
 };
 
 export interface IMeasureChords {
@@ -18,6 +19,7 @@ export interface IChartMeasure {
     isStart?: boolean;
     isEnd?: boolean
     beginRepeat?: boolean;
+    endRepeat?: boolean;
     chords: IMeasureChords[];
 }
 
