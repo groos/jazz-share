@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import * as Core from './core';
 import songs from './content/songs';
 import { IChartLine, IChartMeasure, IMeasureChords, ISongInfo } from './core/models';
-
 import './styles/main.scss';
-import { start } from 'repl';
 
-const SelectSong: React.FC<{ songs: Core.Models.ISongInfo[], handleSelect: any }> = props => {
-    return <select onChange={(e) => props.handleSelect(e.target.value)}>
+const jsonpack = require('jsonpack');
+
+const SelectSong: React.FC<{ songs: Core.Models.ISongInfo[], handleSelect: any, selected: string }> = props => {
+    const active = songs.filter(s => s.title === props.selected);
+    return <select onChange={(e) => props.handleSelect(e.target.value)} value={active.length ? active[0].title : songs[0].title}>
         {props.songs.map((song, sx) => {
             return <option value={song.title} label={song.title} key={`song-${sx}`} />
         })}
@@ -42,20 +43,33 @@ const SongDetails: React.FC<ISongInfo> = song => {
 }
 
 const JazzShare: React.FC = props => {
-    const [song, setSong] = useState(songs[0] as ISongInfo);
+    const [song, setSong] = useState(songs[1] as ISongInfo);
+    const [shareUrl, setShareUrl] = useState('');
 
     useEffect(() => {
-
+        const params = new URLSearchParams(window.location.search.substring(1));
+        if (params.has('d')) {
+            const songData = jsonpack.unpack(params.get('d'));
+            setSong(songData);
+        }
     }, []);
 
     const handleSongChange = (name: string) => {
         setSong(songs.filter(s => s.title === name)[0]);
     }
 
+    const createNewShareUrl = () => {
+        if (song) {
+            const compressed = jsonpack.pack(song);
+            setShareUrl(encodeURI(`www.abc.com?d=${JSON.stringify(compressed)}`));
+        }
+    }
+
     return <div className="outer-container">
         <h1>Jazz Share</h1>
-        <div><button onClick={() => Core.Utils.preEncodeSongData(song)}>Encode</button></div>
-        <SelectSong songs={songs} handleSelect={handleSongChange}/>
+        <div><button onClick={createNewShareUrl}>Encode</button></div>
+        <div>{shareUrl}</div>
+        <SelectSong songs={songs} handleSelect={handleSongChange} selected={song.title}/>
         <SongDetails {...song}/>
     </div>
 }

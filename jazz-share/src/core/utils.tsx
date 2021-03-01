@@ -1,7 +1,5 @@
 import { Models } from ".";
-
-
-
+import { IStringLookup } from "./models";
 
 const urlEncodeMap: Models.IStringLookup = {
     'title': 't',
@@ -10,16 +8,28 @@ const urlEncodeMap: Models.IStringLookup = {
     'chords': 'c',
     'note': 'n',
     'chordType': 'ct',
-    'beats': 'b'
+    'beats': 'b',
+    'lines': 'l'
 };
 
-const preEncodeSongData = (song: Models.ISongInfo) => {
-    const encoded = Object.keys(song).reduce((acc: any, currentKey: string) => {
+/*
+    
+*/
+
+const handleEncodingLevel = (obj: IStringLookup) => {
+    const encoded = Object.keys(obj).reduce((acc: any, currentKey: string) => {
         const shortKey = urlEncodeMap[currentKey] ? urlEncodeMap[currentKey] : currentKey;
-        acc[shortKey] = song[currentKey];
+        acc[shortKey] = obj[currentKey];
        
         return acc;
     }, {});
+
+    return encoded;
+}
+
+const preEncodeSongData = (song: Models.ISongInfo) => {
+    let encoded = handleEncodingLevel(song);
+    encoded.chrt = handleEncodingLevel(song.chart as IStringLookup);
 
     console.log('encoded' + ': ' + JSON.stringify(encoded));
     return encoded;
