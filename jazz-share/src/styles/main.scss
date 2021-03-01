@@ -14,81 +14,35 @@
 }
 
 .chart-line-measure {
+    position: relative;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 6vh;
     width: 100%;
     border: 2px solid blue;
 
-    .is-start {
-
-    }
-}
-
-.repeat-bar-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    z-index: -1;
-
-    .repeat-dot {
-        position: absolute;
-
-        width: 3px;
-        height: 3px;
-        background-color: black;
-        border: 1px solid black;
-        border-radius: 50%;
-
-        &.top {
-            top: 35%;
-        }
-
-        &.bottom {
-            top: 65%;
-        }
-    }
-
     .repeat-bar {
         position: absolute;
-        top: -2px;
-        height: 110%;
-        width: 4%;
-        background-color: black;
-
-        &.little {
-            width: 2%;
-        }
-    }
-
-    &.start {
-        left: 0;
-
-        .repeat-dot {
-            left: 10%;
-        }
-
-        .repeat-bar {
+        width: 1vw;
+        height: 100%;
+        background-color: grey;
+        
+        &.start {
             left: 0;
 
-            &.little {
-                left: 6%;
+            &.small {
+                left: 1.5vw;
+                width: .5vw;
             }
         }
-    }
 
-    &.end {
-        right: 0;
-
-        .repeat-dot {
-            right: 10%;
-        }
-
-        .repeat-bar {
+        &.end {
             right: 0;
 
-            &.little{
-                right: 6%;
+            &.small {
+                right: 1.5vw;
+                width: .5vw;
             }
         }
     }

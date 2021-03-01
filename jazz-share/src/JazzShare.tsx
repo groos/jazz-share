@@ -15,17 +15,15 @@ const SelectSong: React.FC<{ songs: Core.Models.ISongInfo[], handleSelect: any }
 };
 
 const Measure: React.FC<IChartMeasure> = measure => {
-    // css is jacked up for this
-    // const startBorder = measure.isStart ? <div className="repeat-bar-container start">
-    //     <div className="repeat-bar"></div><div className="repeat-bar little"></div>
-    //     <div className="repeat-dot top"></div><div className="repeat-dot bottom"></div>
-    // </div> : '';
+    const repeatBarStart = measure.isStart ? [<div className="repeat-bar start"></div>, <div className="repeat-bar start small"></div>] : null;
+    const repeatBarEnd = measure.isEnd ? [<div className="repeat-bar end"></div>, <div className="repeat-bar end small"></div>] : null;
 
     return <div className={`chart-line-measure ${measure.isStart ? 'is-start' : ''}`}>
-        {/* {startBorder} */}
+        {repeatBarStart}
         {measure.chords.map((chord: IMeasureChords) => {
             return chord.note;
         })}
+        {repeatBarEnd}
     </div>
 }
 

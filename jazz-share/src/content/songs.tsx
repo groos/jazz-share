@@ -4,10 +4,6 @@ import { Models, Enums } from '../core';
 
 const songs: Models.ISongInfo[] = [
     {
-        title: 'Take the A Train',
-        author: 'Billy Strayhorn'
-    },
-    {
         title: 'Killer Joe',
         author: 'Benny Golson',
         chart: {
@@ -72,6 +68,10 @@ const songs: Models.ISongInfo[] = [
                 }
             ]
         }
+    },
+    {
+        title: 'Take the A Train',
+        author: 'Billy Strayhorn'
     },
     {
         title: 'Lady Bird',
