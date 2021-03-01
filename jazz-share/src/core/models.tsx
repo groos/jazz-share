@@ -1,6 +1,10 @@
 import * as Enums from './enums';
 
-export interface ISongInfo {
+export interface IStringLookup {
+    [key: string]: any;
+}
+
+export interface ISongInfo extends IStringLookup {
     title: string;
     timeSignature?: string;
     author?: string;

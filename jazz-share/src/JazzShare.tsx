@@ -15,13 +15,13 @@ const SelectSong: React.FC<{ songs: Core.Models.ISongInfo[], handleSelect: any }
 };
 
 const Measure: React.FC<IChartMeasure> = measure => {
-    const repeatBarStart = measure.isStart ? [<div className="repeat-bar start"></div>, <div className="repeat-bar start small"></div>] : null;
-    const repeatBarEnd = measure.isEnd ? [<div className="repeat-bar end"></div>, <div className="repeat-bar end small"></div>] : null;
+    const repeatBarStart = measure.isStart ? <><div className="repeat-bar start"></div><div className="repeat-bar start small"></div></> : null;
+    const repeatBarEnd = measure.isEnd ? <><div className="repeat-bar end"></div><div className="repeat-bar end small"></div></> : null;
 
     return <div className={`chart-line-measure ${measure.isStart ? 'is-start' : ''}`}>
         {repeatBarStart}
-        {measure.chords.map((chord: IMeasureChords) => {
-            return <div>{chord.note}</div>;
+        {measure.chords.map((chord: IMeasureChords, cx: number) => {
+            return <div key={`chord-${cx}`}>{chord.note}</div>;
         })}
         {repeatBarEnd}
     </div>
@@ -29,7 +29,7 @@ const Measure: React.FC<IChartMeasure> = measure => {
 
 const Line: React.FC<IChartLine> = line => {
     return <div className={`chart-line`}>
-        { line.measures.map((measure: IChartMeasure) => <Measure {...measure}/>) }
+        { line.measures.map((measure: IChartMeasure, mx: number) => <Measure {...measure} key={`meas-${mx}`}/>) }
     </div>
 }
 
@@ -37,7 +37,7 @@ const SongDetails: React.FC<ISongInfo> = song => {
     return <div className="song-details">
         <div>{song.title}</div>
         <div>{song.author}</div>
-        <div>{song.chart?.lines.map((line: IChartLine) => <Line {...line}/>)}</div>
+        <div>{song.chart?.lines.map((line: IChartLine, kx: number) => <Line {...line} key={`line-${kx}`} />)}</div>
     </div>
 }
 
@@ -54,6 +54,7 @@ const JazzShare: React.FC = props => {
 
     return <div className="outer-container">
         <h1>Jazz Share</h1>
+        <div><button onClick={() => Core.Utils.preEncodeSongData(song)}>Encode</button></div>
         <SelectSong songs={songs} handleSelect={handleSongChange}/>
         <SongDetails {...song}/>
     </div>
