@@ -1,5 +1,3 @@
-import { countReset } from 'console';
-import { CoreTransformationContext } from 'typescript';
 import { Models, Enums } from '../core';
 
 const songs: Models.ISongInfo[] = [

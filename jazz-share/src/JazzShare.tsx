@@ -21,7 +21,7 @@ const Measure: React.FC<IChartMeasure> = measure => {
     return <div className={`chart-line-measure ${measure.isStart ? 'is-start' : ''}`}>
         {repeatBarStart}
         {measure.chords.map((chord: IMeasureChords) => {
-            return chord.note;
+            return <div>{chord.note}</div>;
         })}
         {repeatBarEnd}
     </div>
@@ -43,6 +43,10 @@ const SongDetails: React.FC<ISongInfo> = song => {
 
 const JazzShare: React.FC = props => {
     const [song, setSong] = useState(songs[0] as ISongInfo);
+
+    useEffect(() => {
+
+    }, []);
 
     const handleSongChange = (name: string) => {
         setSong(songs.filter(s => s.title === name)[0]);
